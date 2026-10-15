@@ -1,6 +1,6 @@
 {
   "name": "tomoshibi",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "灯火迷宮: Claudeの応答を待つ間だけ進む、セーブ付きの育成型ダンジョンRPG",
   "author": {
     "name": "jnk0vc"
@@ -12,8 +12,8 @@
     "rankingUrl": {
       "type": "string",
       "title": "ランキングサーバーのURL",
-      "description": "tomoshibi-rankingを置いたWorkerのURL(https://〜.workers.dev)。空ならランキングを使わない",
-      "default": ""
+      "description": "ランキングサーバーのURL。既定は作者が公開しているサーバー。空にするとランキングの通信を一切しない",
+      "default": "https://tomoshibi-ranking.jankovic.workers.dev"
     }
   }
 }

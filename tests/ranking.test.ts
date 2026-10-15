@@ -7,7 +7,7 @@ import { endpoint, loadPlayer, normalizeName, parseBoard, SUBMIT_INTERVAL_MS } f
 
 const URL_OPTIONS = { options: { rankingUrl: 'https://rank.example.workers.dev/' } }
 
-type Call = { method: string; url: string; body: Record<string, unknown> | undefined }
+type Call = { method: string; url: string; body: Record<string, unknown> | undefined; headers: Record<string, string> | undefined }
 
 /** エンジンの下層と、ランキングサーバーの代わりをテスト側で受け持つ */
 function world(on: On, saved?: Game) {
@@ -30,7 +30,7 @@ function world(on: On, saved?: Game) {
   on('http.fetch', ($, e) => {
     const method = e.init?.method ?? 'GET'
     const body = e.init?.body === undefined ? undefined : (JSON.parse(e.init.body) as Record<string, unknown>)
-    calls.push({ method, url: e.url, body })
+    calls.push({ method, url: e.url, body, headers: e.init?.headers })
     const json = (status: number, data: unknown) => ({ value: { status, ok: status < 300, headers: {}, text: JSON.stringify(data) } })
     if (method === 'POST') return json(200, { ok: true, rank: { level: 2, deepest: 2, exp: 2 } })
     if (method === 'DELETE') return json(200, { ok: true })
@@ -108,6 +108,7 @@ describe('ランキングへの参加と送信', () => {
       expect(post?.url).toBe('https://rank.example.workers.dev/v1/scores')
       expect(post?.body).toMatchObject({ name: '灯の 勇者', level: 3, deepest: 2, totalExp: 40, kills: 6, ticks: 50 })
       expect(post?.body?.playerId).toBe(w.player()?.id)
+      expect(post?.headers?.['user-agent']).toMatch(/^tomoshibi-mod\//)
       expect(w.calls.some(call => call.method === 'GET' && call.url.includes(`me=${w.player()?.id}`))).toBe(true)
       expect(w.ranking()?.isJoined).toBe(true)
 
@@ -160,7 +161,7 @@ describe('ランキングへの参加と送信', () => {
     await pane.unmount()
   })
 
-  test('URLが設定されていなければ通信せず、設定方法を出す', async ($, on) => {
+  test('URLを空にすると通信せず、設定方法を出す', { options: { rankingUrl: '' } }, async ($, on) => {
     mock.clock(on)
     const w = world(on)
     await $.session.start({ cwd: '/tmp', surface: 'terminal', isInteractive: true })

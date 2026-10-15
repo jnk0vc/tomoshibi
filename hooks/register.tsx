@@ -53,6 +53,7 @@ const LIT = atom({ plugin: 'tomoshibi', key: 'isLit' } as const, false)
 const INITIAL_RANKING: Ranking = { isJoined: false, name: '', by: 'level', board: null, error: null, isBusy: false }
 const RANKING = atom({ plugin: 'tomoshibi', key: 'ranking' } as const, INITIAL_RANKING)
 const PLAYER_KEY = 'player'
+const USER_AGENT = 'tomoshibi-mod/0.3.0'
 const RANK_ORDER: readonly RankBy[] = ['level', 'deepest', 'exp']
 
 // ランキングサーバーのURL。設定(userConfig)から読み、モジュールが読み直されるたびに入れ直す
@@ -290,7 +291,10 @@ async function request(
   const url = endpoint(rankingUrl, path)
   if (url === null) return 'ランキングサーバーのURLが正しくない(https://で始まるURLにする)。'
   try {
-    const init = body === undefined ? { method } : { method, headers: { 'content-type': 'application/json' }, body }
+    // User-Agentを付けないと、CloudflareのBrowser Integrity Checkに弾かれることがある(error code 1010)
+    const headers: Record<string, string> = { 'user-agent': USER_AGENT }
+    if (body !== undefined) headers['content-type'] = 'application/json'
+    const init = body === undefined ? { method, headers } : { method, headers, body }
     return await $.http.fetch(url, init)
   } catch (error) {
     $.ui.log(`tomoshibi: ${method} ${path}: ${String(error)}`, { to: 'debug' })
