@@ -1,0 +1,4 @@
+# エンジンが読み込みのたびに書き出す型(接続中のMCPツール名も入るので公開しない)
+.claude-plugin/types/
+node_modules/
+.DS_Store

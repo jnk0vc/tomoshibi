@@ -1,0 +1,6 @@
+{
+  "name": "tomoshibi",
+  "description": "Claudeの応答待ちに進む放置型ダンジョンRPG「灯火迷宮」のmod",
+  "owner": { "name": "jnk0vc" },
+  "plugins": [{ "name": "tomoshibi", "source": "./" }]
+}
