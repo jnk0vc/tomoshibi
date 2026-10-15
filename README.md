@@ -68,3 +68,7 @@ claude plugin test .
 ```
 
 開発中のmodを手元のフォルダから読み込むときは、`claude --plugin-dir <このフォルダ>`で起動します。
+
+## ライセンス
+
+MIT License。全文は[LICENSE](LICENSE)にあります。

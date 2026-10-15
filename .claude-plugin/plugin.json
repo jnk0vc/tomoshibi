@@ -6,6 +6,7 @@
     "name": "jnk0vc"
   },
   "repository": "https://github.com/jnk0vc/tomoshibi",
+  "license": "MIT",
   "types": "./types/index.d.ts",
   "userConfig": {
     "rankingUrl": {
