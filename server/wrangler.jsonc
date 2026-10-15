@@ -1,0 +1,28 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "tomoshibi-ranking",
+	"main": "src/index.ts",
+	// 新規Workerなので作成日（今日）の日付にそろえる
+	"compatibility_date": "2026-10-15",
+	// ログとトレースを有効にする（トレースは件数が多くなりやすいので一部だけ採取）
+	"observability": {
+		"enabled": true,
+		"logs": {
+			"enabled": true,
+			"head_sampling_rate": 1
+		},
+		"traces": {
+			"enabled": true,
+			"head_sampling_rate": 0.1
+		}
+	},
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "tomoshibi-ranking",
+			// 作者の本番D1のID。別のアカウントで立てるときは`wrangler d1 create tomoshibi-ranking --binding DB`で自分のIDに差し替える（README参照）
+			"database_id": "b5ebc604-9b46-4da2-adaa-390ea3a1ce64",
+			"migrations_dir": "migrations"
+		}
+	]
+}

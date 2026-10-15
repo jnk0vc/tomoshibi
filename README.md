@@ -49,7 +49,7 @@ Claude Code 2.1.295で動作を確認しています。modの仕組み自体が�
 
 参加すると、名前・Lv・最深階・総経験値・撃破数・探索時間をランキングサーバーへ送り、Lv・最深階・総経験の順位表を見られます。記録を送るのは、ペインで名前を入れて参加したあとだけです。抜けるとサーバー上の記録も消えます。参加していなくても、ペインを開くと順位表を読み込みます。
 
-既定では、作者が公開しているサーバー(`https://tomoshibi-ranking.jankovic.workers.dev`、Cloudflare WorkersとD1)につながります。ランキングの通信を一切したくない場合は、プラグイン設定の`rankingUrl`を空にします。自分で立てたサーバーを使う場合は、そのURLを入れます。
+既定では、作者が公開しているサーバー(`https://tomoshibi-ranking.jankovic.workers.dev`、Cloudflare WorkersとD1)につながります。サーバーのコードとデプロイ手順は[server/](server/)にあります。ランキングの通信を一切したくない場合は、プラグイン設定の`rankingUrl`を空にします。自分で立てたサーバーを使う場合は、そのURLを入れます。
 
 ## 開発
 
@@ -62,6 +62,7 @@ Claude Code 2.1.295で動作を確認しています。modの仕組み自体が�
 | `hooks/ranking.ts` | ランキングの入力検証と応答の検証 |
 | `types/index.d.ts` | `$.state`に置く値の型 |
 | `tests/` | `claude plugin test`で動くテスト |
+| `server/` | ランキングサーバー(Cloudflare WorkersとD1)。テストは`server/`で`pnpm test`(vitest) |
 
 ```
 claude plugin validate .

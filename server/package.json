@@ -1,0 +1,20 @@
+{
+  "name": "tomoshibi-ranking",
+  "version": "0.1.0",
+  "private": true,
+  "description": "灯火迷宮のランキングAPI（Cloudflare Workers + D1）",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "test": "vitest run",
+    "typecheck": "wrangler types && tsc --noEmit",
+    "cf-typegen": "wrangler types",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "@cloudflare/vitest-plugin": "1.4.2",
+    "typescript": "7.0.2",
+    "vitest": "5.0.4",
+    "wrangler": "4.151.0"
+  }
+}
